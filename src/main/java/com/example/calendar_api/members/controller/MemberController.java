@@ -1,5 +1,7 @@
 package com.example.calendar_api.members.controller;
 
+import com.example.calendar_api.members.domain.Member;
+import com.example.calendar_api.members.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,11 @@ public class MemberController {
         return new ResponseEntity(HttpStatus.OK);
     }*/
 
-    @GetMapping("/join")
-    public Map<String, Object> firstController() {
-        return null;
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @PostMapping("/join")
+    public void joinMember(Member member) {
+        memberRepository.save(member);
     }
 }
