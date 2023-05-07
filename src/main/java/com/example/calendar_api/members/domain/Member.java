@@ -18,18 +18,20 @@ public class Member {
     @Column(name = "MEMBERS_IDX", unique = true, nullable = false)
     private Integer id;
 
-    @Column(length = 100, nullable = false)
-    private String NAME;
+    @Column(name="NAME", length = 100, nullable = false)
+    private String name;
 
-    @Column(length = 255, nullable = false)
-    private String E_MAIL;
+    @Column(name="E_MAIL", length = 255, nullable = false)
+    private String email;
 
-    @Column(length = 255, nullable = false)
-    private String PASSWORD;
+    @Column(name="PASSWORD", length = 255, nullable = false)
+    private String password;
 
-    private LocalDateTime REG_DATE = LocalDateTime.now(); // 생성일
+    @Column(name="REG_DATE")
+    private LocalDateTime regDate = LocalDateTime.now(); // 생성일
 
-    private LocalDateTime ALT_DATE; // 수정일
+    @Column(name="ALT_DATE")
+    private LocalDateTime altDate; // 수정일
 
     /*@OneToMany(mappedBy = "member", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Board> board = new ArrayList<>();*/
@@ -37,8 +39,8 @@ public class Member {
     //빌더
     @Builder
     public Member(String name, String password, String email) {
-        this.NAME = name;
-        this.PASSWORD = password;
-        this.E_MAIL = email;
+        this.name = name;
+        this.password = password;
+        this.email = email;
     }
 }

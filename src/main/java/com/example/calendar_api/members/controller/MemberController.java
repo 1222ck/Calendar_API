@@ -24,7 +24,7 @@ public class MemberController {
     private MemberRepository memberRepository;
 
     @PostMapping("/join")
-    public void joinMember(Member member) {
+    public void joinMember(@RequestBody Member member) {
         memberRepository.save(member);
     }
 }
