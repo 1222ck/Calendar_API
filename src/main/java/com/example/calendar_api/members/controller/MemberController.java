@@ -63,4 +63,22 @@ public class MemberController {
         data.put("statusCode", statusCode);
         return data;
     }
+
+    @GetMapping("/get/{id}")
+    @ResponseBody
+    public Map<String, Object> getMember(@PathVariable("id") Integer id) {
+        Map<String, Object> data = new HashMap<String, Object>();
+
+        String statusCode = "200";
+        try {
+            data.put("member", memberRepository.findById(id));
+            data.put("statusMessage", "사용 가능한 이메일입니다.");
+        } catch (Exception e){
+            statusCode = "400";
+            data.put("statusMessage", e.getMessage());
+        }
+
+        data.put("statusCode", statusCode);
+        return data;
+    }
 }
