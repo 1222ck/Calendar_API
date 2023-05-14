@@ -2,35 +2,19 @@ package com.example.calendar_api.members.controller;
 
 import com.example.calendar_api.members.domain.Member;
 import com.example.calendar_api.members.dto.MemberDto;
-import com.example.calendar_api.members.repository.MemberRepository;
 import com.example.calendar_api.members.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/member")
 public class MemberController {
-    /*@Autowired
-    private UserService userService;
-
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid LoginDto loginDto, HttpSession session) {
-        SessionUtil.setUser(session, userService.login(loginDto));
-        return new ResponseEntity(HttpStatus.OK);
-    }*/
-
     @Resource(name = "memberService")
     private MemberService memberService;
-
-    @Autowired
-    private MemberRepository memberRepository;
 
     /**
      * 회원 가입
