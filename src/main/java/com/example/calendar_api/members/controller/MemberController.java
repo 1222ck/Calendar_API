@@ -50,12 +50,12 @@ public class MemberController {
             }
 
             Member member = memberRepository.findByEmail(email);
-            if(!ObjectUtils.isEmpty(member)) {
+            if (!ObjectUtils.isEmpty(member)) {
                 throw new IllegalStateException("이미 존재하는 회원입니다.");
             }
 
             data.put("statusMessage", "사용 가능한 이메일입니다.");
-        } catch (Exception e){
+        } catch (Exception e) {
             statusCode = "400";
             data.put("statusMessage", e.getMessage());
         }
@@ -73,7 +73,7 @@ public class MemberController {
         try {
             data.put("member", memberRepository.findById(id));
             data.put("statusMessage", "사용 가능한 이메일입니다.");
-        } catch (Exception e){
+        } catch (Exception e) {
             statusCode = "400";
             data.put("statusMessage", e.getMessage());
         }
