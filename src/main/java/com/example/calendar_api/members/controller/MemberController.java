@@ -32,11 +32,20 @@ public class MemberController {
     @Autowired
     private MemberRepository memberRepository;
 
+    /**
+     * 회원 가입
+     * @param member
+     */
     @PostMapping("/join")
     public void create(@RequestBody MemberDto member) {
         memberService.save(member);
     }
 
+    /**
+     * 이메일 중복 체크
+     * @param email
+     * @return
+     */
     @GetMapping("/check-email")
     public Map<String, Object> checkEmail(@RequestParam String email) {
         Map<String, Object> data = new HashMap<String, Object>();
@@ -71,6 +80,11 @@ public class MemberController {
         return data;
     }
 
+    /**
+     * 회원 정보 조회
+     * @param id
+     * @return Map<String, Object>
+     */
     @GetMapping("/get/{id}")
     public Map<String, Object> getMember(@PathVariable("id") Integer id) {
         Map<String, Object> data = new HashMap<String, Object>();
