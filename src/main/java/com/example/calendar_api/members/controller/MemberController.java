@@ -21,8 +21,19 @@ public class MemberController {
      * @param member
      */
     @PostMapping("/join")
-    public void create(@RequestBody MemberDto member) {
-        memberService.save(member);
+    public Map<String, Object> create(@RequestBody MemberDto member) {
+        Map<String, Object> data = new HashMap<String, Object>();
+        String statusCode = "200";
+
+        try {
+            memberService.save(member);
+        } catch (Exception e) {
+            statusCode = "400";
+            data.put("statusMessage", e.getMessage());
+        }
+
+        data.put("statusCode", statusCode);
+        return data;
     }
 
     /**
