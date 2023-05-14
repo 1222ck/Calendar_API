@@ -52,12 +52,14 @@ public class Diary {
 
 
     @Builder
-    public Diary(String title, Integer sDate, Integer eDate, String allDayYn, String color, String place) {
+    public Diary(String title, Integer sDate, Integer eDate, String allDayYn, String color, String place, Integer grpId, String regUserId) {
         this.title = title;
         this.sDate = sDate;
         this.eDate = eDate;
         this.allDayYn = allDayYn;
         this.color = color;
         this.place = place;
+        this.grpId = grpId;
+        this.regUserId = regUserId;
     }
 }
