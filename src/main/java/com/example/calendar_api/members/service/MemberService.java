@@ -1,24 +1,30 @@
 package com.example.calendar_api.members.service;
 
+import com.example.calendar_api.members.domain.Member;
+import com.example.calendar_api.members.dto.MemberDto;
 import com.example.calendar_api.members.repository.MemberRepository;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
 @Service
 public class MemberService {
-    @Autowired
-    private MemberRepository memberRepository;
-    /*@Resource(name = "bCryptPasswordEncoder")
-    private PasswordEncoder bCryptPasswordEncoder;
-    @Autowired
-    private MessageSourceAccessor msa;
+    private final MemberRepository memberRepository;
 
-    public User save(UserDto userDto) {
-        if (isExistUser(userDto.getEmail())) {
-            throw new UserDuplicatedException(msa.getMessage("email.duplicate.message"));
-        }
-        return userRepository.save(userDto.toEntityWithPasswordEncode(bCryptPasswordEncoder);
-    }*/
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+    // private final GuestbookRepository repository;
+
+    public MemberDto save(MemberDto memberDto) {
+        memberRepository.save(memberDto.build());
+        return memberDto;
+    }
+
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
+    public Member findById(Integer id) {
+        return memberRepository.findById(id).get();
+    }
 }

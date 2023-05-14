@@ -1,14 +1,18 @@
 package com.example.calendar_api.members.controller;
 
 import com.example.calendar_api.members.domain.Member;
+import com.example.calendar_api.members.dto.MemberDto;
 import com.example.calendar_api.members.repository.MemberRepository;
+import com.example.calendar_api.members.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/member")
@@ -22,12 +26,15 @@ public class MemberController {
         return new ResponseEntity(HttpStatus.OK);
     }*/
 
+    @Resource(name = "memberService")
+    private MemberService memberService;
+
     @Autowired
     private MemberRepository memberRepository;
 
     @PostMapping("/join")
-    public void create(@RequestBody Member member) {
-        memberRepository.save(member);
+    public void create(@RequestBody MemberDto member) {
+        memberService.save(member);
     }
 
     @GetMapping("/check-email")
@@ -49,7 +56,7 @@ public class MemberController {
                 throw new IllegalStateException("이메일을 입력해주세요.");
             }
 
-            Member member = memberRepository.findByEmail(email);
+            Member member = memberService.findByEmail(email);
             if (!ObjectUtils.isEmpty(member)) {
                 throw new IllegalStateException("이미 존재하는 회원입니다.");
             }
@@ -65,20 +72,25 @@ public class MemberController {
     }
 
     @GetMapping("/get/{id}")
-    @ResponseBody
     public Map<String, Object> getMember(@PathVariable("id") Integer id) {
         Map<String, Object> data = new HashMap<String, Object>();
 
         String statusCode = "200";
+        String statusMessage = "";
         try {
-            data.put("member", memberRepository.findById(id));
-            data.put("statusMessage", "사용 가능한 이메일입니다.");
+            Member member = memberService.findById(id);
+            System.out.println(member);
+
+            data.put("member", member);
         } catch (Exception e) {
             statusCode = "400";
-            data.put("statusMessage", e.getMessage());
+            statusMessage = e.getMessage();
         }
 
         data.put("statusCode", statusCode);
+        data.put("statusMessage", statusMessage);
+        System.out.println(data);
+
         return data;
     }
 }

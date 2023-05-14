@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "MEMBERS")
 public class Member {
@@ -47,7 +46,6 @@ public class Member {
     private List<Board> board = new ArrayList<>();*/
 
     //빌더
-    @Builder
     public Member() {
 
     }
