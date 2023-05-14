@@ -4,6 +4,9 @@ import com.example.calendar_api.members.domain.Member;
 import com.example.calendar_api.members.dto.MemberDto;
 import com.example.calendar_api.members.repository.MemberRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
+import java.util.Optional;
 
 
 @Service
@@ -17,6 +20,21 @@ public class MemberService {
 
     public MemberDto save(MemberDto memberDto) {
         memberRepository.save(memberDto.build());
+        return memberDto;
+    }
+
+    public MemberDto update(Integer id, MemberDto memberDto) {
+        Optional<Member> updateMember = memberRepository.findById(id);
+        if(updateMember.isPresent() == false)
+            return null;
+
+        Member member = updateMember.get();
+        member.setName(memberDto.getName());
+        if (!ObjectUtils.isEmpty(memberDto.getPassword())) {
+            member.setPassword(memberDto.getPassword());
+        }
+
+        memberRepository.save(member);
         return memberDto;
     }
 

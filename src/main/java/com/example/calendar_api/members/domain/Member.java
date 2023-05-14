@@ -1,6 +1,9 @@
 package com.example.calendar_api.members.domain;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.Id;
 
 import javax.persistence.*;
@@ -9,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "MEMBERS")
 public class Member {
@@ -36,11 +40,13 @@ public class Member {
     @Column(name="PASSWORD", length = 255, nullable = false)
     private String password;
 
+    @CreationTimestamp
     @Column(name="REG_DATE")
     private LocalDateTime regDate = LocalDateTime.now(); // 생성일
 
     @Column(name="ALT_DATE")
-    private LocalDateTime altDate; // 수정일
+    @UpdateTimestamp
+    private LocalDateTime altDate = LocalDateTime.now();; // 수정일
 
     /*@OneToMany(mappedBy = "member", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Board> board = new ArrayList<>();*/

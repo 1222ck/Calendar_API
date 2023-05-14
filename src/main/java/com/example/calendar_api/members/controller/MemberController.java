@@ -107,4 +107,29 @@ public class MemberController {
 
         return data;
     }
+
+    /**
+     * 회원 정보 수정
+     * @param id
+     * @param member
+     * @return
+     */
+    @PostMapping("/edit/{id}")
+    public Map<String, Object> update(@PathVariable("id") Integer id, @RequestBody MemberDto member) {
+        Map<String, Object> data = new HashMap<String, Object>();
+
+        String statusCode = "200";
+        String statusMessage = "";
+        try {
+            memberService.update(id, member);
+        } catch (Exception e) {
+            statusCode = "400";
+            statusMessage = e.getMessage();
+        }
+
+        data.put("statusCode", statusCode);
+        data.put("statusMessage", statusMessage);
+
+        return data;
+    }
 }
