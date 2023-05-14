@@ -38,6 +38,10 @@ public class MemberService {
         return memberDto;
     }
 
+    public void delete(Integer id) {
+        memberRepository.deleteById(id);
+    }
+
     public Member findByEmail(String email) {
         return memberRepository.findByEmail(email);
     }

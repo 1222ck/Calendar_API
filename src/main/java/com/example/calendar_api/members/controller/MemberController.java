@@ -132,4 +132,28 @@ public class MemberController {
 
         return data;
     }
+
+    /**
+     * 회원 삭제
+     * @param id
+     * @return
+     */
+    @PostMapping("/delete/{id}")
+    public Map<String, Object> delete(@PathVariable("id") Integer id) {
+        Map<String, Object> data = new HashMap<String, Object>();
+
+        String statusCode = "200";
+        String statusMessage = "";
+        try {
+            memberService.delete(id);
+        } catch (Exception e) {
+            statusCode = "400";
+            statusMessage = e.getMessage();
+        }
+
+        data.put("statusCode", statusCode);
+        data.put("statusMessage", statusMessage);
+
+        return data;
+    }
 }
