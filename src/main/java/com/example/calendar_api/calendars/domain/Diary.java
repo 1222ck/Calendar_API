@@ -1,8 +1,16 @@
 package com.example.calendar_api.calendars.domain;
 
+import lombok.Builder;
+import lombok.Getter;
+
+import javax.persistence.Id;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
+@Entity
+@Table(name = "DIARY")
 public class Diary {
 
     //필드
@@ -43,4 +51,13 @@ public class Diary {
     private LocalDateTime regDate = LocalDateTime.now(); // 다이어리 작성 일자
 
 
+    @Builder
+    public Diary(String title, Integer sDate, Integer eDate, String allDayYn, String color, String place) {
+        this.title = title;
+        this.sDate = sDate;
+        this.eDate = eDate;
+        this.allDayYn = allDayYn;
+        this.color = color;
+        this.place = place;
+    }
 }
