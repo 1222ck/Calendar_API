@@ -26,7 +26,11 @@ public class MemberController {
         String statusCode = "200";
 
         try {
-            memberService.save(member);
+            // 1. member 생성
+            String email = memberService.save(member);
+            data.put("email", email);
+
+            // 2. group 생성
         } catch (Exception e) {
             statusCode = "400";
             data.put("statusMessage", e.getMessage());

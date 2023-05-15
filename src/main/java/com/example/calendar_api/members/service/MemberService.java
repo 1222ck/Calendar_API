@@ -18,9 +18,9 @@ public class MemberService {
     }
     // private final GuestbookRepository repository;
 
-    public MemberDto save(MemberDto memberDto) {
-        memberRepository.save(memberDto.build());
-        return memberDto;
+    public String save(MemberDto memberDto) {
+        String email = memberRepository.save(memberDto.build()).getEmail();
+        return email;
     }
 
     public MemberDto update(Integer id, MemberDto memberDto) {

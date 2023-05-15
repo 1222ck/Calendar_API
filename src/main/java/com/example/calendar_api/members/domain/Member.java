@@ -13,9 +13,11 @@ import java.util.*;
 
 @Getter
 @Setter
-@Entity
+@EqualsAndHashCode
 @Table(name = "MEMBERS")
-public class Member {
+@Entity
+@IdClass(MemberId.class)
+public class Member implements Serializable {
     /*
      * 복합키를 구성 하기 위한 필수 조건
      * 1. @EmbeddedId or @IdClass 의 annotation을 붙여야한다.
@@ -27,11 +29,12 @@ public class Member {
 
     //필드
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "MEMBERS_IDX", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name="E_MAIL", length = 255, nullable = false)
+    @Id
+    @Column(name="E_MAIL", unique = true, length = 255, nullable = false)
     private String email;
 
     @Column(name="NAME", length = 100, nullable = false)
