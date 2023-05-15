@@ -28,8 +28,6 @@ public class Member implements Serializable {
      */
 
     //필드
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "MEMBERS_IDX", unique = true, nullable = false)
     private Integer id;
 
