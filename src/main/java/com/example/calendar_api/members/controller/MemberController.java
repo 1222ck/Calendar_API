@@ -1,5 +1,7 @@
 package com.example.calendar_api.members.controller;
 
+import com.example.calendar_api.calendars.dto.GroupDto;
+import com.example.calendar_api.calendars.service.GroupService;
 import com.example.calendar_api.members.domain.Member;
 import com.example.calendar_api.members.dto.MemberDto;
 import com.example.calendar_api.members.service.MemberService;
@@ -16,6 +18,9 @@ public class MemberController {
     @Resource(name = "memberService")
     private MemberService memberService;
 
+    @Resource(name = "groupService")
+    private GroupService groupService;
+
     /**
      * 회원 가입
      * @param member
@@ -28,9 +33,14 @@ public class MemberController {
         try {
             // 1. member 생성
             String email = memberService.save(member);
-            data.put("email", email);
 
             // 2. group 생성
+            String grpNm =  email + " 의 첫번째 그룹";
+            GroupDto groupDto = new GroupDto(grpNm, email);
+            Integer grpId = groupService.save(groupDto);
+
+            data.put("email", email);
+            data.put("grpId", grpId);
         } catch (Exception e) {
             statusCode = "400";
             data.put("statusMessage", e.getMessage());

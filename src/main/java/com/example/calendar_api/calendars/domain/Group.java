@@ -1,10 +1,16 @@
 package com.example.calendar_api.calendars.domain;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@Table(name = "GROUP")
+@Entity
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +26,14 @@ public class Group {
     @Column(name="REG_DATE")
     private LocalDateTime regDate = LocalDateTime.now(); // 다이어리 작성 일자
 
+    public Group() {
 
+    }
+
+    @Builder
+    public Group(String grpNm, String leaderId) {
+        this.grpNm = grpNm;
+        this.leaderId = leaderId;
+    }
 
 }
