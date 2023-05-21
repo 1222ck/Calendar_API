@@ -1,6 +1,6 @@
 package com.example.calendar_api.calendars.dto;
 
-import com.example.calendar_api.calendars.domain.Group;
+import com.example.calendar_api.calendars.domain.DiaryGrp;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,8 +16,8 @@ public class GroupDto {
         this.leaderId = leaderId;
     }
 
-    public Group build() {
-        return Group.builder()
+    public DiaryGrp build() {
+        return DiaryGrp.builder()
                 .grpNm(grpNm)
                 .leaderId(leaderId)
                 .build();

@@ -1,7 +1,7 @@
 package com.example.calendar_api.members.controller;
 
 import com.example.calendar_api.calendars.dto.GroupDto;
-import com.example.calendar_api.calendars.service.GroupService;
+import com.example.calendar_api.calendars.service.DiaryGrpService;
 import com.example.calendar_api.members.domain.Member;
 import com.example.calendar_api.members.dto.MemberDto;
 import com.example.calendar_api.members.service.MemberService;
@@ -18,8 +18,8 @@ public class MemberController {
     @Resource(name = "memberService")
     private MemberService memberService;
 
-    @Resource(name = "groupService")
-    private GroupService groupService;
+    @Resource(name = "diaryGrpService")
+    private DiaryGrpService groupService;
 
     /**
      * 회원 가입
