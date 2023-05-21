@@ -1,14 +1,14 @@
 package com.example.calendar_api.calendars.service;
 
 import com.example.calendar_api.calendars.dto.GroupDto;
-import com.example.calendar_api.calendars.repository.GroupRepository;
+import com.example.calendar_api.calendars.repository.DiaryGrpRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GroupService {
-    private final GroupRepository groupRepository;
+public class DiaryGrpService {
+    private final DiaryGrpRepository groupRepository;
 
-    public GroupService(GroupRepository groupRepository) {
+    public DiaryGrpService(DiaryGrpRepository groupRepository) {
         this.groupRepository = groupRepository;
     }
 

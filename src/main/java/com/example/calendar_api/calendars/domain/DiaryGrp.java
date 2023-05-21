@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @Table(name = "DIARY_GRP")
 @Entity
-public class Group {
+public class DiaryGrp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "GRP_ID", unique = true, nullable = false)
@@ -26,12 +26,12 @@ public class Group {
     @Column(name="REG_DATE")
     private LocalDateTime regDate = LocalDateTime.now(); // 다이어리 작성 일자
 
-    public Group() {
+    public DiaryGrp() {
 
     }
 
     @Builder
-    public Group(String grpNm, String leaderId) {
+    public DiaryGrp(String grpNm, String leaderId) {
         this.grpNm = grpNm;
         this.leaderId = leaderId;
     }
