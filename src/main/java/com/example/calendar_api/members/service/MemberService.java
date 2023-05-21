@@ -8,6 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 
@@ -24,6 +27,15 @@ public class MemberService {
     // private final GuestbookRepository repository;
 
     public String save(MemberDto memberDto) {
+        // member_seq 생성
+        Date from = new Date();
+        SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String to = transFormat.format(from);
+
+        Long memberSeq = Long.parseLong(to);
+        memberDto.setId(memberSeq);
+
+        // 비밀번호 복호화
         String encodedPassword = passwordEncoder.encode(memberDto.getPassword());
         memberDto.setPassword(encodedPassword);
 

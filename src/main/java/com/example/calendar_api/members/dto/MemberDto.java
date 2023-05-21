@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class MemberDto {
-    private Integer id;
+    private Long id;
     private String email;
     private String name;
     private String password;
@@ -28,6 +28,7 @@ public class MemberDto {
 
     public Member build(){
         return Member.builder()
+                .id(id)
                 .email(email)
                 .name(name)
                 .password(password)

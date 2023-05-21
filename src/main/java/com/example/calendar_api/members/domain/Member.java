@@ -28,8 +28,8 @@ public class Member implements Serializable {
      */
 
     //필드
-    @Column(name = "MEMBERS_IDX", unique = true, nullable = false)
-    private Integer id;
+    @Column(name = "MEMBERS_SEQ", unique = true, nullable = false)
+    private Long id;
 
     @Id
     @Column(name="E_MAIL", unique = true, length = 255, nullable = false)
@@ -45,8 +45,8 @@ public class Member implements Serializable {
     @Column(name="REG_DATE")
     private LocalDateTime regDate = LocalDateTime.now(); // 생성일
 
-    @Column(name="ALT_DATE")
     @UpdateTimestamp
+    @Column(name="ALT_DATE")
     private LocalDateTime altDate = LocalDateTime.now();; // 수정일
 
     /*@OneToMany(mappedBy = "member", cascade = CascadeType.MERGE, orphanRemoval = true)
@@ -58,7 +58,8 @@ public class Member implements Serializable {
     }
 
     @Builder
-    public Member(String name, String password, String email) {
+    public Member(Long id, String name, String password, String email) {
+        this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;

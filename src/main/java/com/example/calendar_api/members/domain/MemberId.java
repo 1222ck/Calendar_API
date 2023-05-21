@@ -18,8 +18,8 @@ public class MemberId implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "MEMBERS_IDX")
-    private Integer id;
+    @Column(name = "MEMBERS_SEQ")
+    private Long id;
 
     @Column(name="E_MAIL")
     private String email;
