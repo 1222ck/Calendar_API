@@ -5,13 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class GroupDto {
+public class DiaryGrpDto {
 
     String grpNm;
     String leaderId;
 
     @Builder
-    public GroupDto(String grpNm, String leaderId) {
+    public DiaryGrpDto(String grpNm, String leaderId) {
         this.grpNm = grpNm;
         this.leaderId = leaderId;
     }

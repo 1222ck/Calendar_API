@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/diaryGrp/")
-public class GroupController {
+public class DiaryGrpController {
 
     @Autowired
     private DiaryGrpRepository diaryGrpRepository;
 
     @PostMapping("/groupCreate")
-    public void create(@RequestBody DiaryGrp diaryGrp) {
+    public void groupCreate(@RequestBody DiaryGrp diaryGrp) {
         diaryGrpRepository.save(diaryGrp);
     }
 }

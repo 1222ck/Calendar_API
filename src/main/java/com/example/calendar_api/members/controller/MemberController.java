@@ -1,6 +1,6 @@
 package com.example.calendar_api.members.controller;
 
-import com.example.calendar_api.calendars.dto.GroupDto;
+import com.example.calendar_api.calendars.dto.DiaryGrpDto;
 import com.example.calendar_api.calendars.service.DiaryGrpService;
 import com.example.calendar_api.members.domain.Member;
 import com.example.calendar_api.members.dto.MemberDto;
@@ -36,7 +36,7 @@ public class MemberController {
 
             // 2. group 생성
             String grpNm =  email + " 의 첫번째 그룹";
-            GroupDto groupDto = new GroupDto(grpNm, email);
+            DiaryGrpDto groupDto = new DiaryGrpDto(grpNm, email);
             Integer grpId = groupService.save(groupDto);
 
             data.put("email", email);
