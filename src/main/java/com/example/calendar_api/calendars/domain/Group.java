@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Table(name = "CAL_GROUP")
+@Table(name = "DIARY_GRP")
 @Entity
 public class Group {
     @Id

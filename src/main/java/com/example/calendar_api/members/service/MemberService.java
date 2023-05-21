@@ -3,6 +3,8 @@ package com.example.calendar_api.members.service;
 import com.example.calendar_api.members.domain.Member;
 import com.example.calendar_api.members.dto.MemberDto;
 import com.example.calendar_api.members.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -13,12 +15,18 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
     // private final GuestbookRepository repository;
 
     public String save(MemberDto memberDto) {
+        String encodedPassword = passwordEncoder.encode(memberDto.getPassword());
+        memberDto.setPassword(encodedPassword);
+
         String email = memberRepository.save(memberDto.build()).getEmail();
         return email;
     }
