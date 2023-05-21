@@ -1,6 +1,6 @@
 package com.example.calendar_api.calendars.service;
 
-import com.example.calendar_api.calendars.dto.GroupDto;
+import com.example.calendar_api.calendars.dto.DiaryGrpDto;
 import com.example.calendar_api.calendars.repository.DiaryGrpRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class DiaryGrpService {
         this.groupRepository = groupRepository;
     }
 
-    public Integer save(GroupDto groupDto) {
+    public Integer save(DiaryGrpDto groupDto) {
         Integer grpId = groupRepository.save(groupDto.build()).getGrpId();
         return grpId;
     }
