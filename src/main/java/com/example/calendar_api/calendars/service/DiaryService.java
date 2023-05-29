@@ -14,4 +14,7 @@ public class DiaryService {
     public DiaryService(DiaryRepository diaryRepository) {
         this.diaryRepository = diaryRepository;
     }
+    public Diary findBysDate(int sDate){
+        return diaryRepository.findBysDate(sDate);
+    }
 }

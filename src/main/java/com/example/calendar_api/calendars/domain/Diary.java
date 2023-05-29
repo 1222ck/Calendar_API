@@ -2,6 +2,7 @@ package com.example.calendar_api.calendars.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@NoArgsConstructor
 @Table(name = "DIARY")
 public class Diary {
 
