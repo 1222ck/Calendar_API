@@ -51,6 +51,29 @@ public class MemberController {
     }
 
     /**
+     * 로그인
+     * @param member
+     * @return
+     */
+    @PostMapping("/login")
+    public Map<String, Object> login(@RequestBody MemberDto member) {
+        Map<String, Object> data = new HashMap<String, Object>();
+        String statusCode = "200";
+
+        try {
+            if(!memberService.login(member)){
+                statusCode = "400";
+                data.put("statusMessage", "이메일, 비밀번호를 다시 한번 확인해주세요.");
+            }
+        } catch (Exception e) {
+            statusCode = "400";
+            data.put("statusMessage", e.getMessage());
+        }
+
+        return data;
+    }
+
+    /**
      * 이메일 중복 체크
      * @param email
      * @return
