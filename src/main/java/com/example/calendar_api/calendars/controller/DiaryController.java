@@ -26,7 +26,7 @@ public class DiaryController {
     public Map<String, Object> DiaryContent(@RequestParam int sDate){
         Map<String, Object> data = new HashMap<>();
 
-        /**
+        /*
          * Use the correct HTTP status code.
          * 6.1. 성공 응답은 2XX로 응답한다.
          * 6.2. 실패 응답은 4XX로 응답한다.
@@ -39,6 +39,32 @@ public class DiaryController {
             Diary diaryData = diaryRepository.findBysDate(sDate);
 
             data.put("diaryData", diaryData);
+        }catch (Exception e){
+            statusCode = "400";
+            data.put("statusMessage", e.getMessage());
+        }
+
+        data.put("statusCode", statusCode);
+        return data;
+    }
+
+    //월별 일정 삭제
+    @GetMapping("/delDiary")
+    public Map<String, Object> deleteDiary(@RequestParam int diaryId){
+        Map<String, Object> data = new HashMap<>();
+
+        /*
+         * Use the correct HTTP status code.
+         * 6.1. 성공 응답은 2XX로 응답한다.
+         * 6.2. 실패 응답은 4XX로 응답한다.
+         * 6.3. 5XX 에러는 절대 사용자에게 나타내지 마라!
+         */
+        String statusCode = "200";
+
+        try{
+            diaryRepository.deleteByDiaryId(diaryId);
+
+            data.put("statusMessage", "삭제가 완료 되었습니다");
         }catch (Exception e){
             statusCode = "400";
             data.put("statusMessage", e.getMessage());
