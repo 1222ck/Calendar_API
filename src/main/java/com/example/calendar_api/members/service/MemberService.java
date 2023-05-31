@@ -64,8 +64,8 @@ public class MemberService {
             return false;
         }
 
-        String encodedPassword = passwordEncoder.encode(memberDto.getPassword());
-        if (!findMember.getPassword().equals(encodedPassword)) {
+        //String encodedPassword = passwordEncoder.encode(memberDto.getPassword());
+        if (!passwordEncoder.matches(memberDto.getPassword(), findMember.getPassword())) {
             return false;
         }
 

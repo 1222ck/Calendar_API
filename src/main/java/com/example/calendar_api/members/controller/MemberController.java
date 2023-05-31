@@ -70,6 +70,7 @@ public class MemberController {
             data.put("statusMessage", e.getMessage());
         }
 
+        data.put("statusCode", statusCode);
         return data;
     }
 
