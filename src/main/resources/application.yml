@@ -1,0 +1,9 @@
+spring:
+  main:
+    allow-circular-references: true
+
+jwt:
+  algorithm: 'HS256'
+  expirTime: 1800000
+  headerKey: 'Oing-Token'
+  secretKey: 'oingispretty'
