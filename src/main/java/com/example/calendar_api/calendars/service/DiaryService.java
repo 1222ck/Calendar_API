@@ -27,6 +27,11 @@ public class DiaryService {
         return dataYearAndMonth;
     }
 
+    public List<Diary> findByYearAndMonthAndDay(int sDateYear, int sDateMonth, int sDateDay){
+        List<Diary> dataYearAndMonthAndDay = diaryRepository.findByYearAndMonthAndDay(sDateYear, sDateMonth, sDateDay);
+        return dataYearAndMonthAndDay;
+    }
+
 //    public List<Diary> findBysDateMonth(int sDateMonth){
 //        List<Diary> dataMonth = diaryRepository.findBysDateMonth(sDateMonth);
 //        return dataMonth;

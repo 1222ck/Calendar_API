@@ -5,6 +5,8 @@ import com.example.calendar_api.calendars.repository.DiaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 
 import java.util.HashMap;
@@ -49,26 +51,21 @@ public class DiaryController {
 
                     diaryData = diaryRepository.findBysDateYear(year);
                 //연도, 월이 있을 경우
-                }else if(!ObjectUtils.isEmpty(paramDate.get("sDateYear")) && !ObjectUtils.isEmpty(paramDate.get("sDateMonth"))) {
+                }else if(!ObjectUtils.isEmpty(paramDate.get("sDateYear")) && !ObjectUtils.isEmpty(paramDate.get("sDateMonth")) && ObjectUtils.isEmpty(paramDate.get("sDateDay"))) {
                     int year = Integer.parseInt(String.valueOf(paramDate.get("sDateYear")));
                     int month = Integer.parseInt(String.valueOf(paramDate.get("sDateMonth")));
 
                     diaryData = diaryRepository.findByYearAndMonth(year, month);
                 }
-            }
-//            //연도로 찾기(우선 순위 1)
-//            if (!ObjectUtils.isEmpty(sDateYear) && !"0000".equals(sDateYear)){
-//                diaryData = diaryRepository.findBysDateYear(sDateYear);
-//            //월별 찾기(우선 순위 2)
-//            } else if(!ObjectUtils.isEmpty(sDateMonth) && !"00".equals(sDateMonth)){
-//                diaryData = diaryRepository.findBysDateMonth(sDateMonth);
-//            //일별 찾기(우선 순위 3)
-//            }else if(!ObjectUtils.isEmpty(sDateDay) && !"00".equals(sDateDay)){
-//                diaryData = diaryRepository.findBysDateDay(sDateDay);
-//            }else{
-//                throw new IllegalStateException("올바른 값을 입력해주세요.");
-//            }
+                //연도, 월, 일이 있을 경우
+                else if(!ObjectUtils.isEmpty(paramDate.get("sDateYear")) && !ObjectUtils.isEmpty(paramDate.get("sDateMonth")) && !ObjectUtils.isEmpty(paramDate.get("sDateDay"))){
+                    int year = Integer.parseInt(String.valueOf(paramDate.get("sDateYear")));
+                    int month = Integer.parseInt(String.valueOf(paramDate.get("sDateMonth")));
+                    int day = Integer.parseInt(String.valueOf(paramDate.get("sDateDay")));
 
+                    diaryData = diaryRepository.findByYearAndMonthAndDay(year, month, day);
+                }
+            }
             data.put("diaryData", diaryData);
         }catch (Exception e){
             statusCode = "400";
