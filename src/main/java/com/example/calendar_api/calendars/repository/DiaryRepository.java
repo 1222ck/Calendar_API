@@ -21,4 +21,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Integer> {
     @Query("SELECT d FROM Diary d WHERE d.sDateYear = ?1 and d.sDateMonth = ?2")
     List<Diary> findByYearAndMonth(int sDateYear, int sDateMonth);
 
+    @Query("SELECT d From Diary d where d.sDateYear = ?1 and d.sDateMonth = ?2 and d.sDateDay = ?3")
+    List<Diary> findByYearAndMonthAndDay(int sDateYear, int sDateMonth, int sDateDay);
+
 }
