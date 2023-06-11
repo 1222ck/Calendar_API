@@ -53,7 +53,7 @@ public class DiaryController {
                     int year = Integer.parseInt(String.valueOf(paramDate.get("sDateYear")));
                     int month = Integer.parseInt(String.valueOf(paramDate.get("sDateMonth")));
 
-//                    diaryData = diaryRepository.findBysDateYearAndsDateMonth(year, month);
+                    diaryData = diaryRepository.findByYearAndMonth(year, month);
                 }
             }
 //            //연도로 찾기(우선 순위 1)

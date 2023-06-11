@@ -22,10 +22,10 @@ public class DiaryService {
         return dataYear;
     }
 
-//    public List<Diary> findBysDateYearAndsDateMonth(int sDateYear, int sDateMonth){
-//        List<Diary> dataYearAndMonth = diaryRepository.findBysDateYearAndsDateMonth(sDateYear, sDateMonth);
-//        return dataYearAndMonth;
-//    }
+    public List<Diary> findBysDateYearAndsDateMonth(int sDateYear, int sDateMonth){
+        List<Diary> dataYearAndMonth = diaryRepository.findByYearAndMonth(sDateYear, sDateMonth);
+        return dataYearAndMonth;
+    }
 
 //    public List<Diary> findBysDateMonth(int sDateMonth){
 //        List<Diary> dataMonth = diaryRepository.findBysDateMonth(sDateMonth);
