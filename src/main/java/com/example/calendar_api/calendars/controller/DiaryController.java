@@ -3,7 +3,9 @@ package com.example.calendar_api.calendars.controller;
 import com.example.calendar_api.calendars.domain.Diary;
 import com.example.calendar_api.calendars.repository.DiaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,8 +24,8 @@ public class DiaryController {
     }
 
     //월별 일정 조회
-    @GetMapping("/getDiary")
-    public Map<String, Object> DiaryContent(@RequestParam int sDate){
+    @PostMapping("/getDiary")
+    public Map<String, Object> DiaryContent(@RequestBody HashMap<String, String> paramDate){
         Map<String, Object> data = new HashMap<>();
 
         /*
@@ -36,7 +38,36 @@ public class DiaryController {
         String statusCode = "200";
 
         try{
-            Diary diaryData = diaryRepository.findBysDate(sDate);
+            List<Diary> diaryData = new ArrayList<>();
+
+            if(ObjectUtils.isEmpty(paramDate.get("sDateYear"))) {
+                throw new IllegalStateException("연도 값은 필수값 입니다.");
+            }else{
+                //연도만 있을 경우
+                if(ObjectUtils.isEmpty(paramDate.get("sDateMonth"))){
+                    int year = Integer.parseInt(String.valueOf(paramDate.get("sDateYear")));
+
+                    diaryData = diaryRepository.findBysDateYear(year);
+                //연도, 월이 있을 경우
+                }else if(!ObjectUtils.isEmpty(paramDate.get("sDateYear")) && !ObjectUtils.isEmpty(paramDate.get("sDateMonth"))) {
+                    int year = Integer.parseInt(String.valueOf(paramDate.get("sDateYear")));
+                    int month = Integer.parseInt(String.valueOf(paramDate.get("sDateMonth")));
+
+//                    diaryData = diaryRepository.findBysDateYearAndsDateMonth(year, month);
+                }
+            }
+//            //연도로 찾기(우선 순위 1)
+//            if (!ObjectUtils.isEmpty(sDateYear) && !"0000".equals(sDateYear)){
+//                diaryData = diaryRepository.findBysDateYear(sDateYear);
+//            //월별 찾기(우선 순위 2)
+//            } else if(!ObjectUtils.isEmpty(sDateMonth) && !"00".equals(sDateMonth)){
+//                diaryData = diaryRepository.findBysDateMonth(sDateMonth);
+//            //일별 찾기(우선 순위 3)
+//            }else if(!ObjectUtils.isEmpty(sDateDay) && !"00".equals(sDateDay)){
+//                diaryData = diaryRepository.findBysDateDay(sDateDay);
+//            }else{
+//                throw new IllegalStateException("올바른 값을 입력해주세요.");
+//            }
 
             data.put("diaryData", diaryData);
         }catch (Exception e){
