@@ -57,7 +57,7 @@ public class DiaryController {
 
                     diaryData = diaryRepository.findByYearAndMonth(year, month);
                 }
-                //연도, 월, 일이 있을 경우
+                //연도, 월, 일이 모두 있을경우
                 else if(!ObjectUtils.isEmpty(paramDate.get("sDateYear")) && !ObjectUtils.isEmpty(paramDate.get("sDateMonth")) && !ObjectUtils.isEmpty(paramDate.get("sDateDay"))){
                     int year = Integer.parseInt(String.valueOf(paramDate.get("sDateYear")));
                     int month = Integer.parseInt(String.valueOf(paramDate.get("sDateMonth")));
