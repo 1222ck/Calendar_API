@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/member")
@@ -133,7 +134,7 @@ public class MemberController {
                 throw new IllegalStateException("이메일을 입력해주세요.");
             }
 
-            Member member = memberService.findByEmail(email);
+            Optional<Member> member = memberService.findByEmail(email);
             if (!ObjectUtils.isEmpty(member)) {
                 throw new IllegalStateException("이미 존재하는 회원입니다.");
             }

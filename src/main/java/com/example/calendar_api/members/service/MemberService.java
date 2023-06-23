@@ -59,13 +59,13 @@ public class MemberService {
     }
 
     public boolean login(MemberDto memberDto) {
-        Member findMember = memberRepository.findByEmail(memberDto.getEmail());
+        Optional<Member> findMember = memberRepository.findByEmail(memberDto.getEmail());
         if (ObjectUtils.isEmpty(findMember)) {
             return false;
         }
 
         //String encodedPassword = passwordEncoder.encode(memberDto.getPassword());
-        if (!passwordEncoder.matches(memberDto.getPassword(), findMember.getPassword())) {
+        if (!passwordEncoder.matches(memberDto.getPassword(), findMember.get().getPassword())) {
             return false;
         }
 
@@ -76,7 +76,7 @@ public class MemberService {
         memberRepository.deleteById(id);
     }
 
-    public Member findByEmail(String email) {
+    public Optional<Member> findByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
 

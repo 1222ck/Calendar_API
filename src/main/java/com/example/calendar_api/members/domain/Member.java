@@ -3,6 +3,8 @@ package com.example.calendar_api.members.domain;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Id;
 
@@ -17,16 +19,7 @@ import java.util.*;
 @Table(name = "MEMBERS")
 @Entity
 @IdClass(MemberId.class)
-public class Member implements Serializable {
-    /*
-     * 복합키를 구성 하기 위한 필수 조건
-     * 1. @EmbeddedId or @IdClass 의 annotation을 붙여야한다.
-     * 2. public 의 no-args constructor 가 있어야 한다.
-     * 3. Serializable 를 implement 받아야 한다.
-     * 4. equals() 와 hashCode() method를 override해야 한다. (Id Class도)
-        (복합키의 일부 컬럼에 @GeneratedValue는 사용하지 못한다. 고 나와있지만 실제로 TEST 시 사용 가능한 경우도 있었다. )
-     */
-
+public class Member implements UserDetails {
     //필드
     @Column(name = "MEMBERS_SEQ", unique = true, nullable = false)
     private Long id;
@@ -51,6 +44,42 @@ public class Member implements Serializable {
 
     /*@OneToMany(mappedBy = "member", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Board> board = new ArrayList<>();*/
+
+    //생성자
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new ArrayList<>(); // 사용자별 권한 설정은 사용하지 않을 예정
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return String.valueOf(id);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // 유효한 계정
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; // 사용불가(잠금)하지 않은 계정
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; // 비밀번호가 만료되지 않음
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 
     //빌더
     public Member() {
