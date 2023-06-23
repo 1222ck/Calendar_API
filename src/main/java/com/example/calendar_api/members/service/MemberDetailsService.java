@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public class MemberDetailsService implements UserDetailsService {
-    private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository; // 의존성 주입(DI)
 
     public MemberDetailsService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
