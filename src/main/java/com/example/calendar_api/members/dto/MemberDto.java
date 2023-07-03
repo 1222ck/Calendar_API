@@ -1,18 +1,14 @@
 package com.example.calendar_api.members.dto;
 
 import com.example.calendar_api.members.domain.Member;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 
 @Getter
 @Setter
-public class MemberDto extends User {
+public class MemberDto {
     private Long id;
     private String email;
     private String name;
@@ -25,9 +21,7 @@ public class MemberDto extends User {
                      String name,
                      String password,
                      LocalDateTime regDate,
-                     LocalDateTime altDate,
-                     Collection<?extends GrantedAuthority> authorities) {
-        super(name, password, authorities);
+                     LocalDateTime altDate) {
         this.email = email;
         this.name = name;
         this.password = password;

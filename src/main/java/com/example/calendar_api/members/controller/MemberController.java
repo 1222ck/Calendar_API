@@ -52,41 +52,6 @@ public class MemberController {
     }
 
     /**
-     * 사용자 로그인을 위한 Entry point. jwt 기반의 auth token과 refresh token을 반환
-     */
-    /*@PostMapping("/login")
-    public ResponseEntity<JwtResponse> authenticateUser(
-            @Param(value = "로그인 요청 파라미터") @Valid @RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authService.authenticateUser(loginRequest)
-                .orElseThrow(() -> new UserLoginException("사용자 로그인 실패: [" + loginRequest + "]"));
-
-        User user = (User) authentication.getPrincipal();
-        CustomUserDetails customUserDetails = new CustomUserDetails(user);
-        LOGGER.info("로그인한 사용자 [Username]: " + customUserDetails.getUsername());
-
-        // Spring Security의 Authentication 객체 생성
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return authService.createAndPersistRefreshTokenForDevice(authentication, loginRequest)
-                .map(RefreshToken::getToken)
-                .map(refreshToken -> {
-                    String jwtToken = authService.generateToken(customUserDetails);
-                    return ResponseEntity.ok(new JwtResponse(
-                                    jwtToken,
-                                    refreshToken,
-                                    tokenProvider.getUserAuthorities(customUserDetails),
-                                    tokenProvider.getExpiryDuration(),
-                                    customUserDetails.getId(),
-                                    customUserDetails.getUsername(),
-                                    customUserDetails.getMembername(),
-                                    customUserDetails.getEmail()
-                            )
-                    );
-                })
-                .orElseThrow(() -> new UserLoginException("Refresh token 생성 실패: [" + loginRequest + "]"));
-    }*/
-
-    /**
      * 로그인
      * @param member
      * @return
@@ -97,10 +62,12 @@ public class MemberController {
         String statusCode = "200";
 
         try {
-            if(!memberService.login(member)){
+
+            String token = memberService.login(member);
+
                 statusCode = "400";
                 data.put("statusMessage", "이메일, 비밀번호를 다시 한번 확인해주세요.");
-            }
+                data.put("token", token);
         } catch (Exception e) {
             statusCode = "400";
             data.put("statusMessage", e.getMessage());
