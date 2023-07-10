@@ -46,6 +46,7 @@ public class Member implements UserDetails {
     ; // 수정일
 
     @ElementCollection(fetch = FetchType.EAGER) //roles 컬렉션
+    @CollectionTable(name = "MEMBER_ROLES")
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
@@ -88,7 +89,11 @@ public class Member implements UserDetails {
     }
 
     @Builder
-    public Member(Long id, String name, String password, String email, List<String> roles) {
+    public Member(Long id,
+                  String name,
+                  String password,
+                  String email,
+                  List<String> roles) {
         this.id = id;
         this.name = name;
         this.password = password;

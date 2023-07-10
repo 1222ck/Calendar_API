@@ -41,21 +41,17 @@ public class MemberService {
         String to = transFormat.format(from);
 
         Long memberSeq = Long.parseLong(to);
-        memberDto.setId(memberSeq);
-
-        // 비밀번호 복호화
-        String encodedPassword = passwordEncoder.encode(memberDto.getPassword());
-        memberDto.setPassword(encodedPassword);
-
 
         Member member = Member.builder()
+                .id(memberSeq)
                 .email(memberDto.getEmail())
+                .name(memberDto.getName())
                 .password(passwordEncoder.encode(memberDto.getPassword()))  //비밀번호 인코딩
                 .roles(Collections.singletonList("ROLE_USER"))         //roles는 최초 USER로 설정
                 .build();
 
 
-        String email = memberRepository.save(memberDto.build()).getEmail();
+        String email = memberRepository.save(member).getEmail();
         return email;
     }
 

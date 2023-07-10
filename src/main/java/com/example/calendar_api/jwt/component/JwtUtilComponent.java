@@ -17,7 +17,7 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtilComponent {
-    private String secret = "javatechie";
+    private String secret = "secretsecretsecretsecretsecretsecretsecretsecretsecret";
 
     private long tokenValidTime = 30 * 60 * 1000L;     // 토큰 유효시간 30분
 

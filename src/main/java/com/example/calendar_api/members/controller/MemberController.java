@@ -62,12 +62,10 @@ public class MemberController {
         String statusCode = "200";
 
         try {
-
             String token = memberService.login(member);
-
-                statusCode = "400";
-                data.put("statusMessage", "이메일, 비밀번호를 다시 한번 확인해주세요.");
-                data.put("token", token);
+            //statusCode = "400";
+            data.put("statusMessage", "성공!");
+            data.put("token", token);
         } catch (Exception e) {
             statusCode = "400";
             data.put("statusMessage", e.getMessage());
