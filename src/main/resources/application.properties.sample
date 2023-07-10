@@ -1,0 +1,13 @@
+# MySQL
+
+spring.datasource.driver-class-name=
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+
+#JPA
+spring.jpa.database=mysql
+spring.jpa.show-sql=true
+spring.jpa.generate-ddl=false
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.properties.hibernate.format_sql=true
