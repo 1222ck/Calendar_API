@@ -1,5 +1,4 @@
 # MySQL
-
 spring.datasource.driver-class-name=
 spring.datasource.url=
 spring.datasource.username=
@@ -11,3 +10,4 @@ spring.jpa.show-sql=true
 spring.jpa.generate-ddl=false
 spring.jpa.hibernate.ddl-auto=none
 spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
