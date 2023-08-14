@@ -4,6 +4,7 @@ import com.example.calendar_api.calendars.dto.DiaryGrpDto;
 import com.example.calendar_api.calendars.service.DiaryGrpService;
 import com.example.calendar_api.members.domain.Member;
 import com.example.calendar_api.members.dto.MemberDto;
+import com.example.calendar_api.members.dto.TokenDto;
 import com.example.calendar_api.members.service.MemberService;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
@@ -62,10 +63,10 @@ public class MemberController {
         String statusCode = "200";
 
         try {
-            String token = memberService.login(member);
-            //statusCode = "400";
+            TokenDto token = memberService.login(member);
             data.put("statusMessage", "성공!");
-            data.put("token", token);
+            data.put("accessToken", token.getAccessToken());
+            data.put("refreshToken", token.getRefreshToken());
         } catch (Exception e) {
             statusCode = "400";
             data.put("statusMessage", e.getMessage());

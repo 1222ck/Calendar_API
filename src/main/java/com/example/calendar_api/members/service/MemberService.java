@@ -2,8 +2,11 @@ package com.example.calendar_api.members.service;
 
 import com.example.calendar_api.jwt.component.JwtUtilComponent;
 import com.example.calendar_api.members.domain.Member;
+import com.example.calendar_api.members.domain.RefreshToken;
 import com.example.calendar_api.members.dto.MemberDto;
+import com.example.calendar_api.members.dto.TokenDto;
 import com.example.calendar_api.members.repository.MemberRepository;
+import com.example.calendar_api.members.repository.RefreshTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,16 +23,20 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
+    private final RefreshTokenRepository refreshTokenRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private final JwtUtilComponent jwtTokenProvider;
 
-    public MemberService(MemberRepository memberRepository, JwtUtilComponent jwtTokenProvider) {
+    public MemberService(MemberRepository memberRepository, RefreshTokenRepository refreshTokenRepository, JwtUtilComponent jwtTokenProvider) {
         this.memberRepository = memberRepository;
+        this.refreshTokenRepository = refreshTokenRepository;
         this.jwtTokenProvider = jwtTokenProvider;
     }
     // private final GuestbookRepository repository;
@@ -70,7 +77,7 @@ public class MemberService {
         return memberDto;
     }
 
-    public String login(MemberDto memberDto) {
+    public TokenDto login(MemberDto memberDto) {
         // 이메일 체크
         Member member = memberRepository.findByEmail(memberDto.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
@@ -80,28 +87,26 @@ public class MemberService {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
 
-        // 성공 시 토큰 발급
-        return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
+        // 이메일 정보로 accessToken 발급
+        TokenDto tokenDto = JwtUtilComponent.createAllToken(memberDto.getEmail());
+        // jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
 
-        /*try {
-            Authentication resultAuth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(memberDto.getEmail(), memberDto.getPassword())
-            );
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        // Refresh토큰 있는지 확인
+        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByAccountEmail(memberDto.getEmail());
+
+        // 있다면 새토큰 발급후 업데이트
+        // 없다면 새로 만들고 디비 저장
+        if(refreshToken.isPresent()) {
+            refreshTokenRepository.save(refreshToken.get().updateToken(tokenDto.getRefreshToken()));
+        }else {
+            RefreshToken newToken = new RefreshToken(tokenDto.getRefreshToken(), memberDto.getEmail());
+            refreshTokenRepository.save(newToken);
         }
 
-        Optional<Member> findMember = memberRepository.findByEmail(memberDto.getEmail());
-        if (ObjectUtils.isEmpty(findMember)) {
-            return false;
-        }
+        System.out.println(tokenDto.getAccessToken());
+        System.out.println(tokenDto.getRefreshToken());
 
-        //String encodedPassword = passwordEncoder.encode(memberDto.getPassword());
-        if (!passwordEncoder.matches(memberDto.getPassword(), findMember.get().getPassword())) {
-            return false;
-        }
-
-        return true;*/
+        return tokenDto;
     }
 
     public void delete(Integer id) {
