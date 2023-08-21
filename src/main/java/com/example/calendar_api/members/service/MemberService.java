@@ -103,9 +103,6 @@ public class MemberService {
             refreshTokenRepository.save(newToken);
         }
 
-        System.out.println(tokenDto.getAccessToken());
-        System.out.println(tokenDto.getRefreshToken());
-
         return tokenDto;
     }
 

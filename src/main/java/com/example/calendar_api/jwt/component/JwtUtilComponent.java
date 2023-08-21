@@ -25,7 +25,7 @@ import java.util.function.Function;
 public class JwtUtilComponent {
     private String secret = "secretsecretsecretsecretsecretsecretsecretsecretsecret";
 
-    private long tokenValidTime = 30 * 60 * 1000L;     // 토큰 유효시간 30분
+    private static Long expiresIn = 30 * 60 * 1000L;     // 토큰 유효시간 30분
 
     private final MemberDetailsService memberDetailsService;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -61,7 +61,15 @@ public class JwtUtilComponent {
 
     // 토큰 생성
     public static TokenDto createAllToken(String email) {
-        return new TokenDto(createToken(email, "Access"), createToken(email, "Refresh"));
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+        Date now = new Date();
+        Date expiresInTime = new Date(now.getTime() + expiresIn);
+
+        return new TokenDto(
+                createToken(email, "Access"),
+                createToken(email, "Refresh"),
+                expiresInTime
+        );
     }
 
     public static String createToken(String email, String type) {
@@ -157,7 +165,7 @@ public class JwtUtilComponent {
         return Jwts.builder()
                 .setClaims(claims) // 정보 저장
                 .setIssuedAt(now) // 토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + tokenValidTime)) // 토큰 유효시각 설정
+                .setExpiration(new Date(now.getTime() + expiresIn)) // 토큰 유효시각 설정
                 .signWith(SignatureAlgorithm.HS256, secret)  // 암호화 알고리즘과, secret 값
                 .compact();
     }

@@ -67,6 +67,7 @@ public class MemberController {
             data.put("statusMessage", "성공!");
             data.put("accessToken", token.getAccessToken());
             data.put("refreshToken", token.getRefreshToken());
+            data.put("expiresIn", token.getExpiresIn().getTime());
         } catch (Exception e) {
             statusCode = "400";
             data.put("statusMessage", e.getMessage());
@@ -128,8 +129,6 @@ public class MemberController {
         String statusMessage = "";
         try {
             Member member = memberService.findById(id);
-            System.out.println(member);
-
             data.put("member", member);
         } catch (Exception e) {
             statusCode = "400";
@@ -138,7 +137,6 @@ public class MemberController {
 
         data.put("statusCode", statusCode);
         data.put("statusMessage", statusMessage);
-        System.out.println(data);
 
         return data;
     }
