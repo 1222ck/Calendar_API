@@ -1,7 +1,9 @@
 package com.example.calendar_api.calendars.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Table;
 
+@Table(name = "USER_GRP")
 public class UserGrp {
     @Column(name = "GRP_ID", nullable = false)
     private Integer grpId;
